@@ -6,13 +6,13 @@ import { z } from 'zod';
 const chunkOptionsSchema = z.object({
   strategy: z.enum(['recursive', 'character', 'token', 'markdown', 'html', 'json', 'latex']).optional()
     .describe('The chunking strategy to use. Defaults based on document type.'),
-  size: z.number().optional().default(512)
+  size: z.number().default(512)
     .describe('Maximum size of each chunk'),
-  overlap: z.number().optional().default(50)
+  overlap: z.number().default(50)
     .describe('Number of characters/tokens that overlap between chunks'),
-  separator: z.string().optional().default('\n\n')
+  separator: z.string().default('\n\n')
     .describe('Character(s) to split on. Defaults to double newline for text content'),
-  isSeparatorRegex: z.boolean().optional().default(false)
+  isSeparatorRegex: z.boolean().default(false)
     .describe('Whether the separator is a regex pattern'),
   keepSeparator: z.enum(['start', 'end']).optional()
     .describe('Whether to keep the separator at the start or end of chunks'),
