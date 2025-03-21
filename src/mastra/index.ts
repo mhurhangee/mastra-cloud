@@ -59,20 +59,6 @@ export const mastra = new Mastra({
     {
       handler: async (c, next) => {
         // Allow root path and common health check endpoints to bypass authentication
-        if (
-          c.req.path === '/' || 
-          c.req.path === '/api' || 
-          c.req.path.includes('/health') ||
-          c.req.path.includes('/readiness') ||
-          c.req.path.includes('/ready') ||
-          c.req.path.includes('/live') ||
-          c.req.path.includes('/ping') ||
-          c.req.path === '/openapi.json'
-        ) {
-          await next();
-          return;
-        }
-        
         if (process.env.NODE_ENV === 'development') {
           await next();
           return;
@@ -99,7 +85,7 @@ export const mastra = new Mastra({
       },
       // Only apply authentication to /api/agents/* and /api/workflows/* paths
       // This ensures system endpoints remain accessible
-      path: '/api/(agents|workflows)/*',
+      path: '/api/(agents|workflows|logs|memory|telemetry|tools|vector)/*',
     },
   ],
 });
