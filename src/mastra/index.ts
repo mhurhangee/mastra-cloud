@@ -18,9 +18,11 @@ export const mastra = new Mastra({
     {
       handler: async (c, next) => {
         const origin = c.req.header('Origin');
-        
+
+        const updatedAllowedDomains = [...allowedDomains, 'http://localhost:4111'];
+
         // Check if the request origin is in our allowed list
-        if (origin && allowedDomains.includes(origin)) {
+        if (origin && updatedAllowedDomains.includes(origin)) {
           c.header('Access-Control-Allow-Origin', origin);
           c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
           c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
