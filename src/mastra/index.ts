@@ -18,16 +18,34 @@ export const mastra = new Mastra({
     {
       handler: async (c, next) => {
         const origin = c.req.header('Origin');
-
-        const updatedAllowedDomains = [...allowedDomains, 'http://localhost:4111'];
-
+        
+        // Add wildcard as fallback to ensure API endpoints are accessible
+        const updatedAllowedDomains = [
+          ...allowedDomains, 
+          'http://localhost:4111',
+          // Add Mastra Cloud domain if not already included
+          'https://*.mastra.cloud',
+        ];
+        
+        // Allow requests with no origin (like curl requests)
+        if (!origin) {
+          c.header('Access-Control-Allow-Origin', '*');
+        } 
         // Check if the request origin is in our allowed list
-        if (origin && updatedAllowedDomains.includes(origin)) {
+        else if (updatedAllowedDomains.some(domain => {
+          // Handle wildcard domains
+          if (domain.includes('*')) {
+            const pattern = domain.replace('*', '.*');
+            return new RegExp(pattern).test(origin);
+          }
+          return domain === origin;
+        })) {
           c.header('Access-Control-Allow-Origin', origin);
-          c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-          c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-          c.header('Access-Control-Allow-Credentials', 'true');
         }
+        
+        c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        c.header('Access-Control-Allow-Credentials', 'true');
         
         // Handle preflight requests (OPTIONS)
         if (c.req.method === 'OPTIONS') {
@@ -40,6 +58,12 @@ export const mastra = new Mastra({
     // Authentication middleware
     /*{
       handler: async (c, next) => {
+        // Allow health check endpoints to bypass authentication
+        if (c.req.path.includes('/health') || c.req.path.includes('/readiness')) {
+          await next();
+          return;
+        }
+        
         if (process.env.NODE_ENV === 'development') {
           await next();
           return;
