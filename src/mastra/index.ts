@@ -56,10 +56,10 @@ export const mastra = new Mastra({
       },
     },
     // Authentication middleware
-    /*{
+    {
       handler: async (c, next) => {
-        // Allow health check endpoints to bypass authentication
-        if (c.req.path.includes('/health') || c.req.path.includes('/readiness')) {
+        // Allow the /api endpoint (used for system status checks) to bypass authentication
+        if (c.req.path === '/api' && c.req.method === 'GET') {
           await next();
           return;
         }
@@ -84,6 +84,6 @@ export const mastra = new Mastra({
         await next();
       },
       path: '/api/*',
-    },*/
+    },
   ],
 });
