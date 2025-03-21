@@ -15,7 +15,7 @@ export const mastra = new Mastra({
   }),
   serverMiddleware: [
     // CORS middleware (should come before authentication)
-    {
+    /*{
       handler: async (c, next) => {
         const origin = c.req.header('Origin');
 
@@ -36,7 +36,7 @@ export const mastra = new Mastra({
         
         await next();
       },
-    },
+    },*/
     // Authentication middleware
     {
       handler: async (c, next) => {
