@@ -1,6 +1,9 @@
 import { Step, Workflow } from '@mastra/core/workflows';
 import { MDocument } from '@mastra/rag';
 import { z } from 'zod';
+import { createLogger } from '@mastra/core/logger';
+const logger = createLogger({ name: 'Mastra', level: 'info' });
+ 
 
 // Define a schema for chunking options
 const chunkOptionsSchema = z.object({
@@ -34,8 +37,14 @@ const chunkMarkdown = new Step({
     if (!triggerData) {
       throw new Error('Trigger data not found');
     }
+    logger.info('triggerData', triggerData);
 
     const { markdownText, chunkOptions = {} } = triggerData;
+    if (!markdownText) {
+      throw new Error('Markdown text not found');
+    }
+    logger.info('markdownText', { text: markdownText });
+    logger.info('chunkOptions', chunkOptions);
 
     // Create MDocument from markdown text
     const doc = MDocument.fromMarkdown(markdownText);

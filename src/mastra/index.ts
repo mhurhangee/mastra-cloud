@@ -83,7 +83,6 @@ export const mastra = new Mastra({
         
         await next();
       },
-      // Only apply authentication to /api/agents/* and /api/workflows/* paths
       // This ensures system endpoints remain accessible
       path: '/api/(agents|workflows|logs|memory|telemetry|tools|vector)/*',
     },
