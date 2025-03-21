@@ -17,6 +17,8 @@
     "@mastra/core": "^0.6.3",
     "@mastra/rag": "^0.1.12",
     "mastra": "^0.4.2",
+    "onnxruntime-common": "^1.21.0",
+    "onnxruntime-web": "^1.21.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

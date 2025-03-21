@@ -20,6 +20,12 @@ importers:
       mastra:
         specifier: ^0.4.2
         version: 0.4.2(@opentelemetry/api@1.9.0)(react@19.0.0)(typescript@5.8.2)
+      onnxruntime-common:
+        specifier: ^1.21.0
+        version: 1.21.0
+      onnxruntime-web:
+        specifier: ^1.21.0
+        version: 1.21.0
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -3610,6 +3616,9 @@ packages:
   onnxruntime-common@1.20.1:
     resolution: {integrity: sha512-YiU0s0IzYYC+gWvqD1HzLc46Du1sXpSiwzKb63PACIJr6LfL27VsXSXQvt68EzD3V0D5Bc0vyJTjmMxp0ylQiw==}
 
+  onnxruntime-common@1.21.0:
+    resolution: {integrity: sha512-Q632iLLrtCAVOTO65dh2+mNbQir/QNTVBG3h/QdZBpns7mZ0RYbLRBgGABPbpU9351AgYy7SJf1WaeVwMrBFPQ==}
+
   onnxruntime-common@1.22.0-dev.20250306-aafa8d170a:
     resolution: {integrity: sha512-NfIQnW4lIk/8LnhnYqknYPeet0U0+AADgKQRlKex36QrNoVSCY+aNaX6wyy2VzQ4CNWxsYh0E203ajRD/zxn0g==}
 
@@ -3627,6 +3636,9 @@ packages:
 
   onnxruntime-web@1.14.0:
     resolution: {integrity: sha512-Kcqf43UMfW8mCydVGcX9OMXI2VN17c0p6XvR7IPSZzBf/6lteBzXHvcEVWDPmCKuGombl997HgLqj91F11DzXw==}
+
+  onnxruntime-web@1.21.0:
+    resolution: {integrity: sha512-adzOe+7uI7lKz6pQNbAsLMQd2Fq5Jhmoxd8LZjJr8m3KvbFyiYyRxRiC57/XXD+jb18voppjeGAjoZmskXG+7A==}
 
   onnxruntime-web@1.22.0-dev.20250306-ccf8fdd9ea:
     resolution: {integrity: sha512-YwqS9Qqx2eKFXIx+HQloqRUG5/STHPUuNk8wn+qVVmwXBIfNdXX0/Lm7wgo5CnC2k+yqZmjDV5V1dZi4PeSPGQ==}
@@ -9342,6 +9354,8 @@ snapshots:
 
   onnxruntime-common@1.20.1: {}
 
+  onnxruntime-common@1.21.0: {}
+
   onnxruntime-common@1.22.0-dev.20250306-aafa8d170a: {}
 
   onnxruntime-node@1.14.0:
@@ -9366,6 +9380,15 @@ snapshots:
       onnx-proto: 4.0.4
       onnxruntime-common: 1.14.0
       platform: 1.3.6
+
+  onnxruntime-web@1.21.0:
+    dependencies:
+      flatbuffers: 25.2.10
+      guid-typescript: 1.0.9
+      long: 5.3.1
+      onnxruntime-common: 1.21.0
+      platform: 1.3.6
+      protobufjs: 7.4.0
 
   onnxruntime-web@1.22.0-dev.20250306-ccf8fdd9ea:
     dependencies:
