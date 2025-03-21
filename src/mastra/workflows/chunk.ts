@@ -14,7 +14,7 @@ const chunkOptionsSchema = z.object({
     .describe('Character(s) to split on. Defaults to double newline for text content'),
   isSeparatorRegex: z.boolean().default(false)
     .describe('Whether the separator is a regex pattern'),
-  keepSeparator: z.enum(['start', 'end']).optional()
+  keepSeparator: z.enum(['start', 'end'])
     .describe('Whether to keep the separator at the start or end of chunks'),
 });
 
@@ -25,7 +25,7 @@ const chunkInputSchema = z.object({
 
 // Define the Step to process markdown text into chunks
 const chunkMarkdown = new Step({
-  id: 'chunk-markdown',
+  id: 'markdown-chunk-step-1',
   description: 'Converts markdown text into chunks using Mastra MDocument',
   inputSchema: chunkInputSchema,
   execute: async ({ context }) => {
@@ -53,7 +53,7 @@ const chunkMarkdown = new Step({
 
 // Create the workflow
 const markdownChunkWorkflow = new Workflow({
-  name: 'markdown-chunk',
+  name: 'testname',
   triggerSchema: chunkInputSchema,
 }).step(chunkMarkdown);
 
