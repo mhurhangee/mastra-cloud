@@ -13,7 +13,7 @@ export const mastra = new Mastra({
     name: 'Mastra',
     level: 'info',
   }),
-  serverMiddleware: [
+  /*serverMiddleware: [
     // CORS middleware (should come before authentication)
     /*{
       handler: async (c, next) => {
@@ -38,7 +38,7 @@ export const mastra = new Mastra({
       },
     },*/
     // Authentication middleware
-    {
+    /*{
       handler: async (c, next) => {
         if (process.env.NODE_ENV === 'development') {
           await next();
@@ -61,5 +61,5 @@ export const mastra = new Mastra({
       },
       path: '/api/*',
     },
-  ],
+  ],*/
 });
