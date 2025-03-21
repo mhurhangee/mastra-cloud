@@ -58,8 +58,17 @@ export const mastra = new Mastra({
     // Authentication middleware
     {
       handler: async (c, next) => {
-        // Allow the /api endpoint (used for system status checks) to bypass authentication
-        if (c.req.path === '/api' && c.req.method === 'GET') {
+        // Allow root path and common health check endpoints to bypass authentication
+        if (
+          c.req.path === '/' || 
+          c.req.path === '/api' || 
+          c.req.path.includes('/health') ||
+          c.req.path.includes('/readiness') ||
+          c.req.path.includes('/ready') ||
+          c.req.path.includes('/live') ||
+          c.req.path.includes('/ping') ||
+          c.req.path === '/openapi.json'
+        ) {
           await next();
           return;
         }
@@ -69,21 +78,28 @@ export const mastra = new Mastra({
           return;
         }
         
+        // Log authentication attempts to help debug
+        console.log(`Authentication check for path: ${c.req.path}`);
+        
         const authHeader = c.req.header('Authorization');
         
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+          console.log(`Authentication failed: No valid auth header for ${c.req.path}`);
           return new Response('Unauthorized: Missing or invalid API key', { status: 401 });
         }
         
         const apiKey = authHeader.split(' ')[1];
         
         if (apiKey !== process.env.MASTRA_API_KEY) {
+          console.log(`Authentication failed: Invalid API key for ${c.req.path}`);
           return new Response('Unauthorized: Invalid API key', { status: 401 });
         }
         
         await next();
       },
-      path: '/api/*',
+      // Only apply authentication to /api/agents/* and /api/workflows/* paths
+      // This ensures system endpoints remain accessible
+      path: '/api/(agents|workflows)/*',
     },
   ],
 });
